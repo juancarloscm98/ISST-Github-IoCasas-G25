@@ -1,0 +1,15 @@
+1678641374800	Delete element
+1678641379214	Delete element
+1678641427989	Rename package 'com.upm.isstbackendspringboot'
+1678641449485	Rename package 'Controller'
+1678641491765	Rename package 'Entity'
+1678641499411	Rename package 'com.upm.controller'
+1678641512724	Rename package 'Repositories'
+1678642567245	Rename type 'Usuario'
+1678642933752	Delete element
+1678642990696	Rename package 'com.upm.entities'
+1678643003661	Rename package 'com.upm.controllers'
+1678643030561	Rename package 'com.upm.respositories'
+1678643043947	Rename package 'com.upm.services'
+1678644400172	Rename type 'UsuarioRepository'
+1678644716386	Rename type 'AutenticacionControlador'
