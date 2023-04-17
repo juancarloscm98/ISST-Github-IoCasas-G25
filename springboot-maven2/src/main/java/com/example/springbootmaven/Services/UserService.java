@@ -14,12 +14,16 @@ public class UserService {
     private UserRepository userRepository;
 
 
-
+    /**
+     * Crea el usuario, asignandole un token
+     * @param user
+     */
     public void createUser(User user) {
 
         while(true) {
             //creamos un token aleatorio
             String tk = random();
+        //    String token=getJWTToken(user.getUsername());
             //buscamos al user con ese token(si existiera)
             boolean userWithoutToken = userRepository.findByToken(tk) == null;
             //Si el token no lo usa nadie userWithoutToken sera nulo y por lo tanto podremos usarlo.
@@ -46,14 +50,25 @@ public class UserService {
         }
     }
 
-    //Funcion para la creación de un token aleatorio
+
+    /**
+     * @return - String aleatorio entre 0 y 999
+     */
     public String random(){
-        int randomNumber = new Random().nextInt(1000); // Genera un número aleatorio entre 0 y 999
+        int randomNumber = new Random().nextInt(1000);
         String randomSt = Integer.toString(randomNumber);
         return randomSt;
     }
 
 //Comprobación de que el usuario existe o no
+
+    /**
+     * Comprueba si el usuario esta creado o ono mediante el username
+     * @param user
+     * @return - boolean
+     * True si el usuario está creado
+     * False si no está creado
+     */
     public boolean isUserCreated(User user){
         System.out.println(user.getUsername());
         User u= userRepository.findByUserName(user.getUsername());
@@ -61,20 +76,20 @@ public class UserService {
         return (u!=null);
     }
 
-    //Devuelve una lista de todos los usuarios
+    /**
+     * Devuelve todos los users
+     * @return
+     */
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-/*
-    //recibe (nombre de usuario y contraseña) y verifique si son válidas.
-    public boolean validateLogin(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        return user != null && user.getPassword().equals(password);
-    }
-*/
 
+    /**
+     * Busca el user por su username
+     * @param username
+     * @return - User
+     */
     public User findByUserName(String username){
-        User u = userRepository.findByUserName(username);
-        return u;
+        return userRepository.findByUserName(username);
     }
 }

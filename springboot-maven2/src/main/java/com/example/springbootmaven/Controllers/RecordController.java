@@ -14,14 +14,26 @@ public class RecordController {
 
     @Autowired
     public RecordService recordService;
-    //Obtencion de todos los records
+
+
+    /**
+     * GET /api/records/record
+     * Obtencion de todos los records
+     * @return - Lista de todos los records
+     */
     @GetMapping("/record")
     public List<Records> records(){
 
         return recordService.getAllRecords();
 
     }
-    //Api para obtener las cerraduras de un cierto usuario, recibiendo el token como párametro
+
+    /**
+     * GET /api/records/locksUser
+     * Api para obtener las cerraduras de un cierto usuario, recibiendo el token como párametro
+     * @param token
+     * @return - Lista de records
+     */
     @GetMapping("/locksUser")
     public List<Records> getLocksUser(@RequestParam("token") String token){
         System.out.println(token);

@@ -13,12 +13,21 @@ public class RecordService {
     @Autowired
     public RecordRepository recordRepository;
 
-    //Obtengo todos los records
+
+    /**
+     * @return - Todos los records
+     */
     public List<Records> getAllRecords(){
         return recordRepository.findAll();
     }
 
-    //Locks de un cierto usuario
+    //
+
+    /**
+     * Locks de un cierto usuario
+     * @param token
+     * @return - Lista de records
+     */
     public List<Records> getLocksUSer(String token){
 
         return recordRepository.findByUserIdToken(token);

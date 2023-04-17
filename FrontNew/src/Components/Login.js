@@ -39,10 +39,11 @@ export default function Login() {
     //Compruebo que el token del usuario no sea ni null ni este vacío
     if (data.token !== null && data.token !== "") {
       //Creo en la memoria loca los siguientes parametro para usarlos luego en la barra de navegacion
-      localStorage.setItem("tokenUserRegistered", data.token);
-      localStorage.setItem("boolUserRegistered", "true");//Lo usaremos para identificar al usuario loggeado
-      localStorage.setItem("usernameUserResigestered", data.username);
-      console.log(localStorage.getItem("boolUserRegistered"))
+      sessionStorage.setItem("tokenUserRegistered", data.token);
+      sessionStorage.setItem("boolUserRegistered", "true");//Lo usaremos para identificar al usuario loggeado
+      sessionStorage.setItem("usernameUserResigestered", data.username);
+      console.log(sessionStorage.getItem("boolUserRegistered"))
+      sessionStorage.setItem("userType", data.usertype);
       //Recargo la pagina
       return window.location.reload()
     } else {

@@ -23,15 +23,30 @@ public class LockController {
     @Autowired
     private RecordRepository recordRepository;
     @Autowired
+    private UserService userService;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private LockService lockService;
     @Autowired
     private LockRepository lockRepository;
 
+
+    /**
+     * HAY QUE AÑADIRLE UN IDENTIFICADOR ÚNICO A CADA CERRADURA EN EL CAMPO lockIdentifier
+     * POST /api/locks/lockRegister
+     * Registro de una cerradura
+     * @param tokenUser
+     * @param lock
+     * @return - ResponseEntity
+     */
     @PostMapping("/lockRegister")
     public ResponseEntity<String> createLock(@RequestParam("tokenUser") String tokenUser,@RequestBody Locks lock){
         //Guardo el registro en la tabla Locks
+        Date today=new Date();
+        lock.setDateOfRegister(today);
+        lock.setLockIndentifier(userService.random());
+        lock.setState("Closed");
         lockRepository.save(lock);
         System.out.println(tokenUser);
         //Obtengo el user con ese token
@@ -45,9 +60,25 @@ public class LockController {
 
     }
 
-
+    /**
+     *GET /api/locks/allLocks
+     * @return - Lista de cerraduras
+     */
     @GetMapping("/allLocks")
     public List<Locks> getLocks(){
         return lockService.getAllLocks();
+    }
+
+
+    /**
+     * Actualiza el estado de la puerta
+     * @param lockIdentifier
+     * @param state
+     */
+    @PostMapping("/updateState")
+    public void updateState(@RequestParam("lockIdentifier") String lockIdentifier,@RequestParam("state") String state){
+        System.out.println(lockIdentifier);
+        System.out.println(state);
+        lockRepository.updateState(lockIdentifier,state);
     }
 }

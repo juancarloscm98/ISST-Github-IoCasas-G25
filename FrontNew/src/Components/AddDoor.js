@@ -21,7 +21,7 @@ function AddDoor(){
             }),
           };
           //Mando el token de el usuario que agrega esa puerta para crear la relacion en records
-          fetch("http://localhost:8080/api/locks/lockRegister?tokenUser="+localStorage.getItem("tokenUserRegistered"),requestOptions)
+          fetch("http://localhost:8080/api/locks/lockRegister?tokenUser="+sessionStorage.getItem("tokenUserRegistered"),requestOptions)
           .then(res=>{
             if(res.status===400){
               MySwal.fire({

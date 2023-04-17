@@ -9,6 +9,13 @@ import java.util.Date;
 @Table(name="Records")
 public class Records {
 
+    /**
+     * Habría que añadir algun campo:
+     * Uno para controlar si la cerradura está abierta o cerrada
+     * Otro para comprobar la fecha en la que se ha abierto
+     * Otro para comprobar la fecha en la que se ha cerrado
+     *
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int recordId;
@@ -22,6 +29,8 @@ public class Records {
     @Column(name="dateOfRegister")
     @Temporal(TemporalType.DATE)
     public Date dateOfRegister;
+
+
 
     public Records(User userId, Locks lockId, Date dateOfRegister) {
         this.userId = userId;

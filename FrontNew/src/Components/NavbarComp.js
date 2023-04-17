@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import Profile from './Profile';
 export default function NavbarComp(){
     const [showLogin, setShowLogin] = useState(false);
+    const[admin,setAdmin]=useState(false);
     const [logged,setLogged]=useState(false)
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
@@ -17,9 +18,10 @@ export default function NavbarComp(){
     const handleShowProfile = () => setShowProfile(true);
 
     useEffect(()=>{
-        console.log(localStorage.getItem("boolUserRegistered"));
-        if(localStorage.getItem("boolUserRegistered")==="true"){
+        console.log(sessionStorage.getItem("boolUserRegistered"));
+        if(sessionStorage.getItem("boolUserRegistered")==="true"){
 
+            setAdmin(sessionStorage.getItem("userType")==="Propietario");
             setLogged(true);
         }
     },[])
@@ -46,9 +48,16 @@ export default function NavbarComp(){
             <Nav >
                 {
             logged ?(
-            <Link to="indexHouse">
-            <Button variant="dark">Mis puertas</Button>
-                </Link>):(null)
+                <>
+                {
+                    admin?(<Link to="indexHouse">
+                    <Button variant="dark">Mis puertas</Button>
+                        </Link>):(<Link to="indexHouse">
+                        <Button variant="dark">Puertas</Button>
+                            </Link>)
+                }
+                </>
+            ):(null)
                 }
                     
                     
@@ -62,7 +71,7 @@ export default function NavbarComp(){
                         logged ? (
                            <Link > 
                            <Button variant="dark" onClick={handleShowProfile}>
-                           {localStorage.getItem("usernameUserResigestered")}
+                           {sessionStorage.getItem("usernameUserResigestered")}
                            </Button>
                            
                            </Link>

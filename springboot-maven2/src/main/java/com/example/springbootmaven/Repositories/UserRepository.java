@@ -10,11 +10,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    //Busqueda de un cierto usuario con un nombre concreto
+
+
+    /**
+     * Busqueda de un cierto usuario con un nombre concreto
+     * @param username
+     * @return - un User con un nombre concreto
+     */
     @Query("Select u from User u WHERE u.Username =:username" )
     User findByUserName(String username);
 
-    //Busqueda de un cierto usuario con un token específico
+
+
+    /**
+     * Busqueda de un cierto usuario con un token específico
+     * @param token
+     * @return - un user con un token concreto
+     */
     @Query("Select u from User u WHERE u.Token =:token" )
     User findByToken(String token);
 
