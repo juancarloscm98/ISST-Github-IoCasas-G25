@@ -10,7 +10,12 @@ import java.util.List;
 
 @Repository
 public interface RecordRepository extends JpaRepository<Records,Integer> {
-    //Query, que busca dentro de los records, un cierto usuario y sus cerraduras
+    /**
+     * Query, que busca dentro de los records, un cierto usuario y sus cerraduras
+     * @param token
+     * @return - Lista de records
+     */
+
     @Query("Select u from Records u WHERE u.userId.Token like :token")
     List<Records> findByUserIdToken(String token);
 }

@@ -8,8 +8,8 @@ export default function Index(){
 
     const[logged,setLogget]=useState(false);
     useEffect(()=>{
-        console.log(localStorage.getItem("boolUserRegistered"));
-        if(localStorage.getItem("boolUserRegistered")==="true"){
+        console.log(sessionStorage.getItem("boolUserRegistered"));
+        if(sessionStorage.getItem("boolUserRegistered")==="true"){
 
             setLogget(true);
         }
@@ -45,9 +45,9 @@ export default function Index(){
                 
             </div>
             <div>
-            <footer class="bg-light text-center text-lg-start">
+            <footer>
 
-  <div class="text-center p-3" style={{ background: "#FDFDFD" }}>
+  <div className="text-center p-3" style={{ background: "#FDFDFD" }}>
     © 2023
   
   </div>

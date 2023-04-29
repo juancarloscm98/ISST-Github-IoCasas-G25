@@ -3,14 +3,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
-
+import CryptoJS from 'crypto-js';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
+import axios from "axios";
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const[userType,setUserType]=useState("Usuario");
   const MySwal = withReactContent(Swal);
 //Aqui defino las acciones que hago al darle al botón aceptar
   const handleSubmit = (e) => {
@@ -20,12 +20,14 @@ export default function Register() {
       headers: { "Content-Type": "application/json" },
       //Defino el body de la petición
       body: JSON.stringify({
-        usertype: "admin",
+        usertype: userType,
         username: username,
-        password: password,
+        password: CryptoJS.AES.encrypt(JSON.stringify(password),"QUEMIRAS").toString()//envio encriptada el parámetro de la contraseña
       }),
     };
-    fetch("http://localhost:8080/api/users/userRegister", requestOptions).then(
+   // axios.post("http://localhost:8080/api/users/userRegister",{usertype: userType,})
+    fetch("http://localhost:8080/api/users/userRegister", requestOptions)
+    .then(
       (res) => {
         //Miro si la peticion devuelve un 400 o no
         if (res.status === 400) {
@@ -74,9 +76,26 @@ export default function Register() {
               type="password"
               placeholder="Contraseña"
             />
+            <label>Propietario</label>
+            <Form.Check
+            value={userType}
+            onClick={()=>{
+              if(userType==="Usuario"){
+                setUserType("Propietario")
+              }else{
+                setUserType("Usuario")
+              }
+            }}
+          />
+            
             
           </Col>
+          <Row>
+          
+          </Row>
+         
         </Row>
+        
       </Form>
       <Row>
               <Col>

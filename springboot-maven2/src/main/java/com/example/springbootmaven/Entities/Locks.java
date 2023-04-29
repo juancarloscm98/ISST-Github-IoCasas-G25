@@ -2,17 +2,27 @@ package com.example.springbootmaven.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "Locks")
 public class Locks {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int lockId;
-    @Column(name = "lockName")
-    private String lockName;
-    @Column(name = "lockIdentifier")
-    private String lockIdentifier;
+    public int lockId;
 
+    @Column(name = "lockName")
+    public String lockName;
+    @Column(name = "lockIdentifier")
+    public String lockIdentifier;
+
+    @Column(name="state")
+    public String state;
+
+    @Column(name="dateOfRegister")
+    @Temporal(TemporalType.DATE)
+    public Date dateOfRegister;
     public int getLockId() {
         return lockId;
     }
@@ -38,8 +48,25 @@ public class Locks {
     }
 
     public Locks(String lockName, String lockIndentifier) {
+
         this.lockName = lockName;
         this.lockIdentifier = lockIndentifier;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Date getDateOfRegister() {
+        return dateOfRegister;
+    }
+
+    public void setDateOfRegister(Date dateOfRegister) {
+        this.dateOfRegister = dateOfRegister;
     }
 
     public Locks() {
