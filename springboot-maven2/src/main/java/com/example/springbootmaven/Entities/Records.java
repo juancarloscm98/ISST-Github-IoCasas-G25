@@ -30,15 +30,38 @@ public class Records {
     @Temporal(TemporalType.DATE)
     public Date dateOfRegister;
 
+    @Column(name="dateOfChange")
+    @Temporal(TemporalType.DATE)
+    public Date dateOfChange;
 
+    @Column(name="state")
+    public String state;
 
-    public Records(User userId, Locks lockId, Date dateOfRegister) {
+    public Records(User userId, Locks lockId, Date dateOfRegister, Date dateOfChange,String state) {
         this.userId = userId;
         this.lockId = lockId;
         this.dateOfRegister = dateOfRegister;
+        this.dateOfChange = dateOfChange;
+        this.state=state;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public Records() {
+    }
+
+    public Date getDateOfChange() {
+        return dateOfChange;
+    }
+
+    public void setDateOfChange(Date dateOfChange) {
+        this.dateOfChange = dateOfChange;
     }
 
     public int getRecordId() {

@@ -1,16 +1,16 @@
 import './css/App.css';
 import {Route} from "react-router-dom";
 import {Routes} from "react-router-dom";
-import Login from "./Components/Login";
-import Index from "./Components/Index";
-import Register from "./Components/Register";
-import IndexHouse from "./Components/IndexHouse";
+import Login from "./views/Login";
+import Index from "./views/Index";
+import Register from "./views/Register";
+import IndexHouse from "./views/IndexHouse";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Doors from "./Components/Doors";
-import AddDoor from "./Components/AddDoor";
-import Bookings from "./Components/Bookings";
-import NavbarComp from "./Components/NavbarComp";
-import Profile from "./Components/Profile";
+import Doors from "./views/Doors";
+import AddDoor from "./views/AddDoor";
+import Bookings from "./views/Bookings";
+import NavbarComp from "./views/NavbarComp";
+import Profile from "./views/Profile";
 //hola soy pedroooddd
 function App() {
     return (

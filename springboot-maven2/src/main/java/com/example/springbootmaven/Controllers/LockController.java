@@ -32,53 +32,27 @@ public class LockController {
     private LockRepository lockRepository;
 
 
-    /**
-     * HAY QUE AÑADIRLE UN IDENTIFICADOR ÚNICO A CADA CERRADURA EN EL CAMPO lockIdentifier
-     * POST /api/locks/lockRegister
-     * Registro de una cerradura
-     * @param tokenUser
-     * @param lock
-     * @return - ResponseEntity
-     */
-    @PostMapping("/lockRegister")
-    public ResponseEntity<String> createLock(@RequestParam("tokenUser") String tokenUser,@RequestBody Locks lock){
-        //Guardo el registro en la tabla Locks
-        Date today=new Date();
-        lock.setDateOfRegister(today);
-        lock.setLockIndentifier(userService.random());
-        lock.setState("Closed");
-        lockRepository.save(lock);
-        System.out.println(tokenUser);
-        //Obtengo el user con ese token
-        User userDoor=userRepository.findByToken(tokenUser);
-        System.out.println(userDoor);
-        Date hoy = new Date();
-        //Creo el registro
-        Records newRecord=new Records(userDoor,lock,hoy);
-        recordRepository.save(newRecord);
-        return new ResponseEntity<>("Nuevo usuario creado", HttpStatus.CREATED);
-
-    }
 
     /**
-     *GET /api/locks/allLocks
+     * GET /api/locks/allLocks
+     *
      * @return - Lista de cerraduras
      */
     @GetMapping("/allLocks")
-    public List<Locks> getLocks(){
+    public List<Locks> getLocks() {
         return lockService.getAllLocks();
     }
 
 
     /**
      * Actualiza el estado de la puerta
+     *
      * @param lockIdentifier
      * @param state
      */
     @PostMapping("/updateState")
-    public void updateState(@RequestParam("lockIdentifier") String lockIdentifier,@RequestParam("state") String state){
-        System.out.println(lockIdentifier);
-        System.out.println(state);
-        lockRepository.updateState(lockIdentifier,state);
+    public void updateState(@RequestParam("lockIdentifier") String lockIdentifier, @RequestParam("state") String state) {
+        Locks recordLock = lockRepository.findByLockIndetifier(lockIdentifier);
+        lockRepository.updateState(lockIdentifier, state);
     }
 }
