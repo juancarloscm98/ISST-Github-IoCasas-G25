@@ -20,6 +20,10 @@ public class Locks {
     @Column(name="state")
     public String state;
 
+    @ManyToOne
+    @JoinColumn(name="userId")
+    public User userId;
+
     @Column(name="dateOfRegister")
     @Temporal(TemporalType.DATE)
     public Date dateOfRegister;
@@ -47,6 +51,22 @@ public class Locks {
         this.lockIdentifier = lockIndentifier;
     }
 
+    public String getLockIdentifier() {
+        return lockIdentifier;
+    }
+
+    public void setLockIdentifier(String lockIdentifier) {
+        this.lockIdentifier = lockIdentifier;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
     public Locks(String lockName, String lockIndentifier) {
 
         this.lockName = lockName;
@@ -71,5 +91,13 @@ public class Locks {
 
     public Locks() {
         super();
+    }
+
+    public Locks(int lockId, String lockName, String lockIdentifier, String state, User userId) {
+        this.lockId = lockId;
+        this.lockName = lockName;
+        this.lockIdentifier = lockIdentifier;
+        this.state = state;
+        this.userId = userId;
     }
 }
