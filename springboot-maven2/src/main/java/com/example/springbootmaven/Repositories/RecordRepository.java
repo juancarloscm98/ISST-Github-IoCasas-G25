@@ -2,7 +2,9 @@ package com.example.springbootmaven.Repositories;
 
 import com.example.springbootmaven.Entities.Locks;
 import com.example.springbootmaven.Entities.Records;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +20,6 @@ public interface RecordRepository extends JpaRepository<Records,Integer> {
 
     @Query("Select u from Records u WHERE u.userId.Token like :token")
     List<Records> findByUserIdToken(String token);
+
+
 }

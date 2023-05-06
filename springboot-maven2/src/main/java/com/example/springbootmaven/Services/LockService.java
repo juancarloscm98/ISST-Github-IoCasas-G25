@@ -19,7 +19,7 @@ public class LockService {
         return lockRepository.findAll();
     }
 
-    public List<Locks> getLocksByUserToken(String token){
+    public List<Locks> getLocksByAdminToken(String token){
         return lockRepository.findByTokenUser(token);
     }
 }

@@ -21,8 +21,9 @@ public class UserLocks {
     //NO el propietario
     @ManyToOne
     @JoinColumn(name="userId")
-    public User user;
-
+    public User userId;
+    @Column(name="state")
+    public String state;
 
     public int getUserLocksId() {
         return userLocksId;
@@ -41,10 +42,18 @@ public class UserLocks {
     }
 
     public User getUser() {
-        return user;
+        return userId;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.userId = user;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

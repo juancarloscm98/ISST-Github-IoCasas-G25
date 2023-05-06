@@ -17,8 +17,6 @@ public class Locks {
     @Column(name = "lockIdentifier")
     public String lockIdentifier;
 
-    @Column(name="state")
-    public String state;
 
     @ManyToOne
     @JoinColumn(name="userId")
@@ -73,14 +71,6 @@ public class Locks {
         this.lockIdentifier = lockIndentifier;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public Date getDateOfRegister() {
         return dateOfRegister;
     }
@@ -97,7 +87,6 @@ public class Locks {
         this.lockId = lockId;
         this.lockName = lockName;
         this.lockIdentifier = lockIdentifier;
-        this.state = state;
         this.userId = userId;
     }
 }

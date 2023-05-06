@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @CrossOrigin
 @RestController
@@ -15,6 +17,11 @@ public class Register {
     @Autowired
     private UserService userService;
 
+    /**
+     * Registro de usuario
+     * @param user
+     * @return
+     */
     @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody User user) {
 
@@ -27,5 +34,16 @@ public class Register {
             return new ResponseEntity<>("Nuevo usuario creado", HttpStatus.CREATED);
         }
 
+    }
+
+    /**
+     * POST /api/users/userRegistered
+     * Obtencion de los usuarios registrados
+     * @return - Lista de users
+     */
+    @GetMapping("/userRegistered")
+    public List<User> userRegistered(){
+
+        return userService.getAllUsers();
     }
 }

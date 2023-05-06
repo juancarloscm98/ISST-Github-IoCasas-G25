@@ -15,9 +15,9 @@ import java.util.List;
 @Repository
 public interface LockRepository extends JpaRepository<Locks,Integer> {
 
-    @Modifying
-    @Query("Update Locks u set u.state =:state where u.lockIdentifier=:lockIdentifier")
-    void updateState(@Param("lockIdentifier") String lockIdentifier,@Param("state") String state);
+    //@Modifying
+  //  @Query("Update Locks u set u.state =:state where u.lockIdentifier=:lockIdentifier")
+    //void updateState(@Param("lockIdentifier") String lockIdentifier,@Param("state") String state);
 
     @Query("Select u from Locks u WHERE u.lockIdentifier =:lockIdentifier" )
     Locks findByLockIndetifier(String lockIdentifier);
