@@ -19,7 +19,6 @@ public class UserService {
      * @param user
      */
     public void createUser(User user) {
-
         while(true) {
             //creamos un token aleatorio
             String tk = random();
@@ -35,20 +34,10 @@ public class UserService {
         }
         //Guardo el usuario
         userRepository.save(user);
-
     }
 
 
-    //metodo para ver si fue eliminado con exito,
-    // el metodo intentara primero eliminar el usuario
-    public Boolean deleteUser(User user) {
-        try {
-            userRepository.delete(user);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+
 
 
     /**
@@ -92,4 +81,8 @@ public class UserService {
     public User findByUserName(String username){
         return userRepository.findByUserName(username);
     }
+
+
+    public User findByToken(String token){return userRepository.findByToken(token);}
 }
+

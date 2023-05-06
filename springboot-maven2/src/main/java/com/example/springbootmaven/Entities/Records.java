@@ -26,10 +26,6 @@ public class Records {
     @JoinColumn(name="lockId")
     public Locks lockId;
 
-    @Column(name="dateOfRegister")
-    @Temporal(TemporalType.DATE)
-    public Date dateOfRegister;
-
     @Column(name="dateOfChange")
     @Temporal(TemporalType.DATE)
     public Date dateOfChange;
@@ -40,7 +36,6 @@ public class Records {
     public Records(User userId, Locks lockId, Date dateOfRegister, Date dateOfChange,String state) {
         this.userId = userId;
         this.lockId = lockId;
-        this.dateOfRegister = dateOfRegister;
         this.dateOfChange = dateOfChange;
         this.state=state;
     }
@@ -87,12 +82,5 @@ public class Records {
     public void setLockId(Locks lockId) {
         this.lockId = lockId;
     }
-
-    public Date getDateOfRegister() {
-        return dateOfRegister;
-    }
-
-    public void setDateOfRegister(Date dateOfRegister) {
-        this.dateOfRegister = dateOfRegister;
-    }
+    
 }
