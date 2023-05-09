@@ -11,15 +11,10 @@ import { Modal } from "react-bootstrap";
 import AddPersonsDoor from "./AddPersonsDoor";
 import Swal from "sweetalert2";
 function MyDoors() {
-
-
-  const [locksUser, setLocksUser] = useState([]);//Cerraduras asignadas al user
-  const [locksAdmin,setLocksAdmin]=useState([])//Cerraduras del administrador
-
-  const [admin, setAdmin] = useState(false);
+  const [locksUser, setLocksUser] = useState([]); //Cerraduras asignadas al user
   const [showListPerson, setShowListPerson] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
   const [state, setState] = useState("Closed");
+  const [lockId,setLockId]=useState();
 
   const deleteLock = async (lock) => {
     const requestOptions = {
@@ -47,10 +42,8 @@ function MyDoors() {
       }
     });
   };
-  
 
- 
-  const getAdminLocks=()=>{
+  const getAdminLocks = () => {
     fetch(
       "http://localhost:8080/api/locks/user/locksAdmin?token=" +
         sessionStorage.getItem("tokenUserRegistered")
@@ -58,23 +51,14 @@ function MyDoors() {
       .then((res) => res.json())
       .then((data) => {
         //Cargo los datos a la variable locksUser para usarla posteriormente
-        data.map((e)=>e.state=state);
+        data.map((e) => (e.state = state));
         setLocksUser(data);
       });
-
-  }
-
+  };
 
   useEffect(() => {
-    setAdmin(sessionStorage.getItem("userType") === "Propietario");
-    if (sessionStorage.getItem("userType") === "Propietario") {
-      setShowAdd(true);
-    } else {
-      setShowAdd(false);
-    }
+    
     getAdminLocks();
-
-  
   }, []);
   return (
     <div>
@@ -84,50 +68,48 @@ function MyDoors() {
           return (
             <Card style={{ width: "18rem", margin: "10px" }}>
               <Row>
-                { 
-                
-                <>
-                <Card.Body style={{ borderStyle: "solid" }}>
-                  <Card.Title>{e.lockName.toUpperCase()}</Card.Title>
+                {
+                  <>
+                    <Card.Body style={{ borderStyle: "solid" }}>
+                      <Card.Title>{e.lockName.toUpperCase()}</Card.Title>
+                      <Link to={"/addPersonDoor/"+e.lockId}
+                      >
+                      <Button
+                        variant="outline-secondary"  
+                      >
+                       
+                        <MdGroupAdd />
+                      </Button>
+                      </Link>
+                      <Button
+                        variant="outline-secondary"
+                        style={{ margin: "20px" }}
+                        onClick={() => deleteLock(e)}
+                      >
+                        <MdDelete />
+                      </Button>
+                    </Card.Body>
 
-                  <Button
-                    variant="outline-secondary"
-                    onClick={() => {
-                      console.log(locksUser);
-                      setShowListPerson(true);
-                    }}
-                  >
-                    <MdGroupAdd />
-                  </Button>
-                  <Button
-                    variant="outline-secondary"
-                    style={{ margin: "20px" }}
-                    onClick={() => deleteLock(e)}
-                  >
-                    <MdDelete />
-                  </Button>
-                </Card.Body>
-                <Modal
-                  show={showListPerson}
-                  onHide={() => setShowListPerson(false)}
-                >
-                  <AddPersonsDoor />
-                </Modal>
-              </>
-               
-                  
+                    <Modal
+                      show={showListPerson}
+                      onHide={() => setShowListPerson(false)}
+                    >
+                      
+                      <AddPersonsDoor lockId={lockId} name={e.lockName}/>
+                    </Modal>
+                  </>
                 }
               </Row>
             </Card>
           );
         })}
-        {showAdd ? (
+        
           <Link to="/add" style={{ margin: "10px" }}>
             <Button variant="dark">
               Puerta nueva <MdAddHome></MdAddHome>
             </Button>
           </Link>
-        ) : null}
+        
       </Row>
     </div>
   );

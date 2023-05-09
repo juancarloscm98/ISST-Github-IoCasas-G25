@@ -1,6 +1,7 @@
 package com.example.springbootmaven.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
@@ -17,7 +18,6 @@ public class Locks {
     @Column(name = "lockIdentifier")
     public String lockIdentifier;
 
-
     @ManyToOne
     @JoinColumn(name="userId")
     public User userId;
@@ -25,6 +25,8 @@ public class Locks {
     @Column(name="dateOfRegister")
     @Temporal(TemporalType.DATE)
     public Date dateOfRegister;
+
+
     public int getLockId() {
         return lockId;
     }
