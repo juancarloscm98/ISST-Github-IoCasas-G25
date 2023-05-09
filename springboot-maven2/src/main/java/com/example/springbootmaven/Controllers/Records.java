@@ -17,12 +17,11 @@ public class Records {
     @Autowired
     public UserService userService;
 
-
     /**
-     * Insert de un nuevo registro de apertura o cerradura
-     * @param lock
+     * Inserta el registrod dentro de la tabla
      * @param token
      * @param state
+     * @param lock
      */
     @PutMapping("/record")
     public void record(@RequestParam("userToken")String token,@RequestParam("state") String state,@RequestBody Locks lock){

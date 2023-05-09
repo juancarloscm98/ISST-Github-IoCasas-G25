@@ -6,33 +6,36 @@ import { useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
 function MyBookings() {
+  const [locksAdmin, setLocksAdmin] = useState([]); //Cerraduras del administrador
 
-
-  const [locksAdmin,setLocksAdmin]=useState([])//Cerraduras del administrador
-
-
-  const updateState=(lock)=>{
+  const updateState = (lock) => {
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     };
-   if(lock.state==="Closed"){
-    fetch("http://localhost:8080/api/locks/user/changeState?lockId="+lock.lockId.lockId+"&state=Open",requestOptions)
-   }else if(lock.state==="Open"){
-    fetch("http://localhost:8080/api/locks/user/changeState?lockId="+lock.lockId.lockId+"&state=Closed",requestOptions)
-
-   }
-   
-    
-  }
-
+    if (lock.state === "Closed") {
+      fetch(
+        "http://localhost:8080/api/locks/user/changeState?lockId=" +
+          lock.lockId.lockId +
+          "&state=Open",
+        requestOptions
+      );
+    } else if (lock.state === "Open") {
+      fetch(
+        "http://localhost:8080/api/locks/user/changeState?lockId=" +
+          lock.lockId.lockId +
+          "&state=Closed",
+        requestOptions
+      );
+    }
+  };
 
   const insertRecord = async (lock) => {
-    let state=""
-    if(lock.state==="Closed"){
-      state="Open"
-    }else if(lock.state==="Open"){
-      state="Closed";
+    let state = "";
+    if (lock.state === "Closed") {
+      state = "Open";
+    } else if (lock.state === "Open") {
+      state = "Closed";
     }
     const requestOptions = {
       method: "PUT",
@@ -54,36 +57,29 @@ function MyBookings() {
   };
 
   const handleOpen = (e) => {
-      insertRecord(e);
-      updateState(e);
-      window.location.reload();
-    
-     
+    insertRecord(e);
+    updateState(e);
+    window.location.reload();
   };
-  
-  const getUserLocks=()=>{
+
+  const getUserLocks = () => {
     fetch(
       "http://localhost:8080/api/locks/user/locksUser?token=" +
         sessionStorage.getItem("tokenUserRegistered")
     )
       .then((res) => res.json())
       .then((data) => {
+      console.log(data)
         setLocksAdmin(data);
-        
 
         //INFO: para poder controlar si una puerta se abre y cierra, tenemos que controlarlas una a una
         //Habría que identificar de forma única(lockIdentifier) y que cuando clickes sobre el boton de abrir o cerrar
         //envía ese identificador al servidor y allí comprobar si esta abierta o no?????
       });
-
-  }
-
+  };
 
   useEffect(() => {
-    
     getUserLocks();
-
-  
   }, []);
   return (
     <div>
@@ -92,62 +88,58 @@ function MyBookings() {
           return (
             <Card style={{ width: "18rem", margin: "10px" }}>
               <Row>
-                {
-                  
-                  e.state === "Open" ? (
-                    <Card.Body
-                      style={{
-                        background: "#D5F5E3",
-                        color: "#2ECC71",
-                        borderStyle: "solid",
+                {e.state === "Open" ? (
+                  <Card.Body
+                    style={{
+                      background: "#D5F5E3",
+                      color: "#2ECC71",
+                      borderStyle: "solid",
+                    }}
+                  >
+                    <Card.Title>{e.lockId.lockName}</Card.Title>
+
+                    <Button
+                      style={{ margin: "20px" }}
+                      onClick={() => {
+                        handleOpen(e);
                       }}
+                      variant="outline-success"
                     >
-                      <Card.Title>{e.lockId.lockName}</Card.Title>
+                      <MdLockOutline />
+                    </Button>
+                    <Card.Subtitle>
+                    Propietario: {e.lockId.userId.username}
+                    </Card.Subtitle>
+                  </Card.Body>
+                ) : (
+                  <Card.Body
+                    style={{
+                      background: "#F5B7B1",
+                      color: "#E74C3C",
+                      borderStyle: "solid",
+                    }}
+                  >
+                    <Card.Title>{e.lockId.lockName}</Card.Title>
 
-                      <Button
-                      style={{margin:"20px"}}
-                        onClick={() => {
-                          handleOpen(e);
-                        }}
-                        variant="outline-success"
-                      >
-                        
-                        <MdLockOutline />
-                      </Button>
-                      <Card.Subtitle>Propietario: {e.userId.username}</Card.Subtitle>
-                    </Card.Body>
-                  ) : (
-                    <Card.Body
-                      style={{
-                        background: "#F5B7B1",
-                        color: "#E74C3C",
-                        borderStyle: "solid",
+                    <Button
+                      style={{ margin: "20px" }}
+                      onClick={() => {
+                        handleOpen(e);
                       }}
+                      variant="outline-danger"
                     >
-                      <Card.Title>{e.lockId.lockName}</Card.Title>
-                      
-                      <Button
-                      style={{margin:"20px"}}
-                        onClick={() => {
-                          handleOpen(e);
-                        }}
-                        variant="outline-danger"
-                      >
-                        <MdLockOutline />
-                      </Button>
+                      <MdLockOutline />
+                    </Button>
 
-                      <Card.Subtitle>Propietario: {e.userId.username}</Card.Subtitle>
-                     
-
-                    </Card.Body>
-                    
-                  )
-                }
+                    <Card.Subtitle>
+                    Propietario: {e.lockId.userId.username}
+                    </Card.Subtitle>
+                  </Card.Body>
+                )}
               </Row>
             </Card>
           );
         })}
-        
       </Row>
     </div>
   );

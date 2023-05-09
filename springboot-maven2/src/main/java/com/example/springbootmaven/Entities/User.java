@@ -14,11 +14,16 @@ public class User {
     @Column(name="Username",length = 50)
     private String Username;
 
-    @Column(name="Password",length = 50)
+    @Column(name="Password",length = 500)
     private String Password;
 
     @Column(name="Token",length = 50)
     private String Token;
+
+
+
+    public User(String token, String username) {
+    }
 
     public int getUserId() {
         return userId;
